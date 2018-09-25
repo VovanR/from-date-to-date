@@ -27,12 +27,27 @@ h1 {
   gap: 15px;
   margin-bottom: 25px;
 }
+.form__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.form__inputs {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 15px;
+}
+.form__datetimepicker {
+
+}
 .form p {
   display: flex;
   align-items: center;
   /*   grid-template-columns: 35px 1fr; */
   /*   gap: 5px; */
   margin: 0;
+  /* For bootstrap-datetimepicker */
+  position: relative;
 }
 .form label {
   display: inline-block;

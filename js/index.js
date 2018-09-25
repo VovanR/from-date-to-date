@@ -218,3 +218,26 @@ document.getElementById('from-now-button').addEventListener('click', () => {
 $form.addEventListener('change', () => {
   update()
 })
+
+
+
+
+
+// bootstrap-datetimepicker
+
+let $activeInput = $fromDate
+
+$form.querySelectorAll('input').forEach(($input) => $input.addEventListener('focus', (e) => $activeInput = e.target))
+
+$('#datetimepicker')
+  .datetimepicker({
+    inline: true,
+    sideBySide: true,
+    format: 'YYYY-MM-DDTHH:mm:ss',
+  })
+  .on('dp.change', (e) => {
+    if ($activeInput) {
+      $activeInput.value = e.date.format('YYYY-MM-DDTHH:mm:ss')
+      triggerFormChange()
+    }
+  })
