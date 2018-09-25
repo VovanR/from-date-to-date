@@ -1,0 +1,29 @@
+{
+  "name": "from-date-to-date",
+  "version": "0.0.1",
+  "description": "Calculate time from date to date",
+  "private": true,
+  "license": "MIT",
+  "repository": "VovanR/from-date-to-date",
+  "author": "Vladimir Rodkin <mail@vovanr.com> (https://github.com/VovanR)",
+  "scripts": {
+    "start": "http-server .",
+    "test": "xo",
+    "prepush": "npm test",
+    "precommit": "npm test"
+  },
+  "keywords": [],
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "xo": "^0.23.0"
+  },
+  "bugs": {
+    "url": "https://github.com/VovanR/from-date-to-date/issues"
+  },
+  "homepage": "https://github.com/VovanR/from-date-to-date#readme",
+  "xo": {
+    "semicolon": false,
+    "space": true
+  }
+}

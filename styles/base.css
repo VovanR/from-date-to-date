@@ -1,0 +1,71 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 2em;
+  font-family: monospace;
+  max-width: 1024px;
+}
+
+
+.form {
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.form p {
+  display: flex;
+  align-items: center;
+  /*   grid-template-columns: 35px 1fr; */
+  /*   gap: 5px; */
+  margin: 0;
+}
+.form label {
+  display: inline-block;
+  width: 35px;
+  margin-right: 5px;
+}
+.form input {
+  display: inline-block;
+}
+.form button {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.docs {
+  font-size: small;
+  margin-top: 50px;
+}
+
+.result-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0 1.5em;
+}

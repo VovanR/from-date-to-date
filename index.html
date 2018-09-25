@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>from-date-to-date</title>
+  <meta name="description" content="Calculate time from date to date">
+
+  <link href="styles/index.css" rel="stylesheet">
+</head>
+<body>
+  <main id="app" class="app">
+    <h1>
+      From date To date
+    </h1>
+
+    <form class="form" id="form" action="">
+      <p>How many time between?</p>
+
+      <p>
+        <label for="from-date">
+          From
+        </label>
+        <input type="datetime-local" id="from-date"/>
+        <button type="button" id="from-now-button">
+          now
+        </button>
+      </p>
+
+      <p>
+        <label for="to-date">
+          To
+        </label>
+        <input type="datetime-local" id="to-date"/>
+      </p>
+    </form>
+
+    <div class="result-container">
+      <div id="result">
+        <h2>Relative</h2>
+
+        <p>
+          <textarea id="result-text" readonly></textarea>
+        </p>
+
+        <div id="result-list">
+        </div>
+      </div>
+
+      <div id="result-foo">
+        <h2>Absolute</h2>
+
+        <p>
+          <textarea id="result-foo-text" readonly></textarea>
+        </p>
+
+        <div id="result-foo-list">
+        </div>
+      </div>
+    </div>
+
+    <div class="docs">
+      <strong>
+        Docs:
+      </strong>
+      <ul>
+        <li>
+          <a href="https://momentjs.com/docs/#/durations/minutes/">
+            https://momentjs.com/docs/#/durations/minutes/
+          </a>
+        </li>
+        <li>
+          <a href="https://momentjs.com/docs/#/customization/relative-time/">
+            https://momentjs.com/docs/#/customization/relative-time/
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <a
+      class="copyright"
+      href="https://github.com/vovanr/from-date-to-date"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span class="copyright__license">MIT ©</span> <span class="copyright__author">Vladimir Rodkin</span>
+    </a>
+  </main>
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js" integrity="sha256-CutOzxCRucUsn6C6TcEYsauvvYilEniTXldPa6/wu0k=" crossorigin="anonymous"></script>
+  <script defer src="js/index.js"></script>
+</body>
+</html>
