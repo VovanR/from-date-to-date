@@ -208,9 +208,11 @@ const update = () => {
 
 update()
 
+const triggerFormChange = () => $form.dispatchEvent(new Event('change'))
+
 document.getElementById('from-now-button').addEventListener('click', () => {
   $fromDate.value = moment().format('YYYY-MM-DDTHH:mm:ss')
-  $form.dispatchEvent(new Event('change'))
+  triggerFormChange()
 })
 
 $form.addEventListener('change', () => {
