@@ -8,6 +8,7 @@ const $resultStat = document.getElementById('result-list')
 const $resultFoo = document.getElementById('result-foo-text')
 const $resultFooStat = document.getElementById('result-foo-list')
 
+const INPUT_DATETIME_LOCAL_FORMAT = 'YYYY-MM-DDTHH:mm:ss'
 
 const MEASUREMENT = {
   years: 'years',
@@ -211,7 +212,7 @@ update()
 const triggerFormChange = () => $form.dispatchEvent(new Event('change'))
 
 document.getElementById('from-now-button').addEventListener('click', () => {
-  $fromDate.value = moment().format('YYYY-MM-DDTHH:mm:ss')
+  $fromDate.value = moment().format(INPUT_DATETIME_LOCAL_FORMAT)
   triggerFormChange()
 })
 
