@@ -1,5 +1,5 @@
-@import "variables.css";
+@import "variables.css?v3";
 @import "twitter-bootstrap-theme.css";
 @import "bootstrap-datetimepicker-theme.css";
-@import "base.css";
-@import "copyright.css";
+@import "base.css?v3";
+@import "copyright.css?v3";
