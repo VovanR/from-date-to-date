@@ -73,11 +73,6 @@ textarea {
   resize: vertical;
 }
 
-.docs {
-  font-size: small;
-  margin-top: 50px;
-}
-
 .result-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
