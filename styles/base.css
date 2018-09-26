@@ -16,16 +16,29 @@ body {
   max-width: 1024px;
 }
 
-h1 {
-  margin-top: 0;
+
+.app {
 }
+
+.app__title {
+  margin-top: 0;
+  margin-bottom: 0.67em;
+}
+
+.app__input-container {
+  margin-bottom: 25px;
+}
+
+.app__output-container {
+}
+
+
 
 
 .form {
   display: grid;
   grid-template-rows: 1fr;
   gap: 15px;
-  margin-bottom: 25px;
 }
 .form__container {
   display: grid;
@@ -38,8 +51,9 @@ h1 {
   gap: 15px;
 }
 .form__datetimepicker {
-
 }
+
+
 .form p {
   display: flex;
   align-items: center;
@@ -61,6 +75,35 @@ h1 {
   display: inline-block;
   margin-left: 5px;
 }
+
+
+/* Active input */
+.form__inputs {
+  position: relative;
+}
+.form__inputs::after {
+  display: block;
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid silver;
+}
+
+.form p {
+}
+.form p.active .active-input-highlighter {
+  width: 100%;
+  margin-left: 25px;
+  border-top: 1px solid silver;
+}
+.form__inputs label,
+.form__inputs input,
+.form__inputs button {
+  flex-shrink: 0;
+}
+
 
 button,
 input,

@@ -14,60 +14,65 @@
 </head>
 <body>
   <main id="app" class="app">
-    <h1>
+    <h1 class="app__title">
       From date To date
     </h1>
 
-    <form class="form" id="form" action="">
-      <div class="form__container">
-        <div class="form__inputs">
-          <p>How many time between?</p>
+    <div class="app__input-container">
+      <form class="form" id="form" action="">
+        <div class="form__container">
+          <div class="form__inputs js-form__inputs">
+            <p>How many time between?</p>
+
+            <p class="js-form__row">
+              <label for="from-date">
+                From
+              </label>
+              <input type="datetime-local" id="from-date" class="form-control" autofocus/>
+              <button type="button" id="from-now-button" class="btn btn-default">
+                now
+              </button>
+              <span class="active-input-highlighter"></span>
+            </p>
+
+            <p class="js-form__row">
+              <label for="to-date">
+                To
+              </label>
+              <input type="datetime-local" id="to-date" class="form-control"/>
+              <span class="active-input-highlighter"></span>
+            </p>
+          </div>
+
+          <div class="form__datetimepicker">
+            <div id="datetimepicker"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="app__output-container">
+      <div class="result-container">
+        <div id="result">
+          <h2>Relative</h2>
 
           <p>
-            <label for="from-date">
-              From
-            </label>
-            <input type="datetime-local" id="from-date" autofocus/>
-            <button type="button" id="from-now-button">
-              now
-            </button>
+            <textarea id="result-text" class="form-control" readonly></textarea>
           </p>
+
+          <div id="result-list">
+          </div>
+        </div>
+
+        <div id="result-foo">
+          <h2>Absolute</h2>
 
           <p>
-            <label for="to-date">
-              To
-            </label>
-            <input type="datetime-local" id="to-date"/>
+            <textarea id="result-foo-text" class="form-control" readonly></textarea>
           </p>
-        </div>
 
-        <div class="form__datetimepicker">
-          <div id="datetimepicker"></div>
-        </div>
-      </div>
-
-    </form>
-
-    <div class="result-container">
-      <div id="result">
-        <h2>Relative</h2>
-
-        <p>
-          <textarea id="result-text" readonly></textarea>
-        </p>
-
-        <div id="result-list">
-        </div>
-      </div>
-
-      <div id="result-foo">
-        <h2>Absolute</h2>
-
-        <p>
-          <textarea id="result-foo-text" readonly></textarea>
-        </p>
-
-        <div id="result-foo-list">
+          <div id="result-foo-list">
+          </div>
         </div>
       </div>
     </div>

@@ -228,17 +228,30 @@ $form.addEventListener('change', () => {
 
 let $activeInput = $fromDate
 
-$form.querySelectorAll('input').forEach(($input) => $input.addEventListener('focus', (e) => $activeInput = e.target))
+const INPUT_ACTIVE_CLASS_NAME = 'active'
+const removeActiveClassName = (element) => element.classList.remove(INPUT_ACTIVE_CLASS_NAME)
+const addActiveClassName = (element) => element.classList.add(INPUT_ACTIVE_CLASS_NAME)
+
+$form.querySelectorAll('input').forEach((element) => {
+  element.addEventListener('focus', ({target}) => {
+    $activeInput = target
+    target.closest('.js-form__inputs').querySelectorAll(`.${INPUT_ACTIVE_CLASS_NAME}`).forEach(removeActiveClassName)
+    addActiveClassName(target.closest('.js-form__row'))
+  })
+})
+
+const updateDateFromDatetimepicker = (date) => {
+  if ($activeInput) {
+    $activeInput.value = date.format(INPUT_DATETIME_LOCAL_FORMAT)
+    triggerFormChange()
+  }
+}
 
 $('#datetimepicker')
   .datetimepicker({
     inline: true,
     sideBySide: true,
-    format: 'YYYY-MM-DDTHH:mm:ss',
+    format: INPUT_DATETIME_LOCAL_FORMAT,
   })
-  .on('dp.change', (e) => {
-    if ($activeInput) {
-      $activeInput.value = e.date.format('YYYY-MM-DDTHH:mm:ss')
-      triggerFormChange()
-    }
-  })
+  .on('dp.change', ({date}) => updateDateFromDatetimepicker(date))
+  .on('dp.update', ({viewDate}) => updateDateFromDatetimepicker(viewDate))
