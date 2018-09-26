@@ -10,7 +10,7 @@
 
 Demo: [vovanr.github.io/from-date-to-date][demo]
 
-<img src="./preview.png" width="600" height="549" alt=""/>
+![](preview.png)
 
 ## License
 MIT © [Vladimir Rodkin](https://github.com/VovanR)
