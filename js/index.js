@@ -30,7 +30,7 @@ const MEASUREMENT_NAME = {
   [MEASUREMENT.seconds]: 'second',
   [MEASUREMENT.milliseconds]: 'millisecond',
 }
-const measurements = [
+const MEASUREMENTS = [
   MEASUREMENT.years,
   MEASUREMENT.months,
   MEASUREMENT.weeks,
@@ -44,16 +44,165 @@ const measurements = [
 
 const pluralize = (word, count) => count > 1 ? `${word}s` : word
 
-const createList = (arr) => arr.length > 0 ? `<ul><li>${arr.join('</li><li>')}</ul></li>` : ''
+const createElement = ({
+  type = 'div',
+  className,
+  text,
+  html,
+  children,
+}) => {
+  const element = document.createElement(type)
+
+  if (className) {
+    element.classList.add(className)
+  }
+
+  if (text) {
+    element.innerText = text
+  } else if (html) {
+    element.innerHTML = html
+  } else if (children) {
+    children.forEach(childElement => element.appendChild(childElement))
+  }
+
+  return element
+}
+
+
+class ResultStatListItem {
+  constructor({label, value}) {
+    this.label = label
+    this.value = value
+
+    this.itemClassName = 'result-stat-list__item'
+    this.itemHiddenClassName = 'result-stat-list__item_hidden'
+    this.labelClassName = 'result-stat-list__label'
+    this.valueClassName = 'result-stat-list__value'
+
+    this.labelElement = null
+    this.valueElement = null
+    this.element = null
+
+    this.buildElement()
+    this.hide()
+  }
+
+  buildElement() {
+    this.labelElement = createElement({
+      type: 'span',
+      className: this.labelClassName,
+      text: `${this.label}: `,
+    })
+
+    this.valueElement = createElement({
+      type: 'span',
+      className: this.valueClassName,
+      text: this.value,
+    })
+
+    this.element = createElement({
+      type: 'li',
+      className: this.itemClassName,
+      children: [
+        this.labelElement,
+        this.valueElement,
+      ]
+    })
+  }
+
+  setValue(value) {
+    if (value === this.value) {
+      return
+    }
+
+    this.value = value
+    this.update()
+  }
+
+  update() {
+    this.valueElement.innerText = this.value.toLocaleString()
+  }
+
+  show() {
+    this.element.classList.remove(this.itemHiddenClassName)
+  }
+
+  hide() {
+    this.element.classList.add(this.itemHiddenClassName)
+  }
+
+  getElement() {
+    return this.element
+  }
+}
+
+
+class ResultStatList {
+  constructor() {
+    this.itemsMap = {}
+
+    this.elementClassName = 'result-stat-list'
+
+    this.element = null
+
+    this.buildElement()
+    this.initItems()
+  }
+
+  buildElement() {
+    this.element = createElement({
+      type: 'ul',
+      className: this.elementClassName,
+    })
+  }
+
+  initItems() {
+    MEASUREMENTS.forEach((measurement) => {
+      const item = new ResultStatListItem({label: pluralize(MEASUREMENT_NAME[measurement], 100)})
+      this.itemsMap[measurement] = item
+      this.element.appendChild(item.getElement())
+    })
+  }
+
+  setData(data) {
+    let shouldShow = false
+    MEASUREMENTS.forEach((measurement) => {
+      const value = data[measurement]
+      const item = this.itemsMap[measurement]
+
+      if (value !== 0 && shouldShow === false) {
+        shouldShow = true
+      }
+
+      item.setValue(value)
+
+      if (shouldShow) {
+        item.show()
+      } else {
+        item.hide()
+      }
+    })
+  }
+
+  getElement() {
+    return this.element
+  }
+}
 
 
 class FromDate {
   constructor({from, to}) {
+    this.resultStatList = new ResultStatList()
+    this.resultFooStatList = new ResultStatList()
+
+    $resultStat.appendChild(this.resultStatList.getElement())
+    $resultFooStat.appendChild(this.resultFooStatList.getElement())
+
     this.update({from, to})
   }
 
   toJSON() {
-    return measurements.reduce((acc, measurement) => ({
+    return MEASUREMENTS.reduce((acc, measurement) => ({
       ...acc,
       [measurement]: this.to.diff(this.from, measurement)
     }), {})
@@ -67,7 +216,7 @@ class FromDate {
     const stat = this.toJSON()
     const duration = this.getDuration()
 
-    return measurements.reduce((acc, measurement) => {
+    return MEASUREMENTS.reduce((acc, measurement) => {
       if (stat[measurement]) {
         acc[measurement] = this.getFloorDurationByMeasurement(duration, measurement)
       } else {
@@ -111,7 +260,7 @@ class FromDate {
     return this._toFormattedString(this.toJSON(), 'or')
   }
   _toFormattedString(stat, lastDivider) {
-    const result = measurements.reduce((acc, measurement) => {
+    const result = MEASUREMENTS.reduce((acc, measurement) => {
       const value = stat[measurement]
       if (value) {
         acc.push(`${value.toLocaleString()} ${pluralize(MEASUREMENT_NAME[measurement], value)}`)
@@ -130,22 +279,6 @@ class FromDate {
     const lastItem = result.pop()
 
     return `${result.join(', ')} ${lastDivider} ${lastItem}`
-  }
-
-  renderResultStat() {
-    return this._renderResultStatList(this.toDurationJSON())
-  }
-  renderResultFooStat() {
-    return this._renderResultStatList(this.toJSON())
-  }
-  _renderResultStatList(stat) {
-    return createList(measurements.reduce((acc, measurement) => {
-      const value = stat[measurement]
-      if (value) {
-        acc.push(`${measurement}: ${value.toLocaleString()}`)
-      }
-      return acc
-    }, []))
   }
 
   update({from, to}) {
@@ -167,10 +300,10 @@ class FromDate {
 
   render() {
     $result.value = this.toFormattedString()
-    $resultStat.innerHTML = this.renderResultStat()
+    this.resultStatList.setData(this.toDurationJSON())
 
     $resultFoo.value = this.toFormattedFooString()
-    $resultFooStat.innerHTML = this.renderResultFooStat()
+    this.resultFooStatList.setData(this.toJSON())
   }
 }
 
@@ -219,8 +352,6 @@ document.getElementById('from-now-button').addEventListener('click', () => {
 $form.addEventListener('change', () => {
   update()
 })
-
-
 
 
 
