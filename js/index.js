@@ -10,6 +10,8 @@ const $resultFooStat = document.getElementById('result-foo-list')
 
 const INPUT_DATETIME_LOCAL_FORMAT = 'YYYY-MM-DDTHH:mm:ss'
 
+const DAYS_IN_WEEK = 7
+
 const MEASUREMENT = {
   years: 'years',
   months: 'months',
@@ -235,7 +237,7 @@ class FromDate {
       case MEASUREMENT.weeks:
         return duration.weeks()
       case MEASUREMENT.days:
-        return duration.days()
+        return duration.days() - (duration.weeks() * DAYS_IN_WEEK)
       case MEASUREMENT.hours:
         return duration.hours()
       case MEASUREMENT.minutes:
