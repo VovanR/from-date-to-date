@@ -370,6 +370,7 @@ $form.querySelectorAll('input').forEach((element) => {
     $activeInput = target
     target.closest('.js-form__inputs').querySelectorAll(`.${INPUT_ACTIVE_CLASS_NAME}`).forEach(removeActiveClassName)
     addActiveClassName(target.closest('.js-form__row'))
+    updateDatetimepickerFromDateInput()
   })
 })
 
@@ -377,6 +378,12 @@ const updateDateFromDatetimepicker = (date) => {
   if ($activeInput) {
     $activeInput.value = date.format(INPUT_DATETIME_LOCAL_FORMAT)
     triggerFormChange()
+  }
+}
+
+const updateDatetimepickerFromDateInput = () => {
+  if ($activeInput.value) {
+    $('#datetimepicker').data("DateTimePicker").date($activeInput.value)
   }
 }
 
