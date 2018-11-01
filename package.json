@@ -24,6 +24,16 @@
   "homepage": "https://github.com/VovanR/from-date-to-date#readme",
   "xo": {
     "semicolon": false,
-    "space": true
+    "space": true,
+    "envs": [
+      "browser"
+    ],
+    "rules": {
+      "comma-dangle": "off"
+    },
+    "globals": [
+      "moment",
+      "$"
+    ]
   }
 }

@@ -43,7 +43,6 @@ const MEASUREMENTS = [
   MEASUREMENT.milliseconds,
 ]
 
-
 /**
  * Pluralize word
  *
@@ -52,7 +51,6 @@ const MEASUREMENTS = [
  * @returns {string}
  */
 const pluralize = (word, count) => count > 1 ? `${word}s` : word
-
 
 /**
  * Create HTMLElement
@@ -88,7 +86,6 @@ const createElement = ({
   return element
 }
 
-
 /**
  * Set datetime input value
  *
@@ -111,7 +108,6 @@ function fillInput(date, inputElement) {
 
   inputElement.value = value
 }
-
 
 class ResultStatListItem {
   constructor({label, value}) {
@@ -180,7 +176,6 @@ class ResultStatListItem {
   }
 }
 
-
 class ResultStatList {
   constructor() {
     this.itemsMap = {}
@@ -201,7 +196,7 @@ class ResultStatList {
   }
 
   initItems() {
-    MEASUREMENTS.forEach((measurement) => {
+    MEASUREMENTS.forEach(measurement => {
       const item = new ResultStatListItem({label: pluralize(MEASUREMENT_NAME[measurement], 100)})
       this.itemsMap[measurement] = item
       this.element.appendChild(item.getElement())
@@ -210,7 +205,7 @@ class ResultStatList {
 
   setData(data) {
     let shouldShow = false
-    MEASUREMENTS.forEach((measurement) => {
+    MEASUREMENTS.forEach(measurement => {
       const value = data[measurement]
       const item = this.itemsMap[measurement]
 
@@ -232,7 +227,6 @@ class ResultStatList {
     return this.element
   }
 }
-
 
 class FromDate {
   constructor({from, to}) {
@@ -300,9 +294,11 @@ class FromDate {
   toFormattedString() {
     return this._toFormattedString(this.toDurationJSON(), 'and')
   }
+
   toFormattedFooString() {
     return this._toFormattedString(this.toJSON(), 'or')
   }
+
   _toFormattedString(stat, lastDivider) {
     const result = MEASUREMENTS.reduce((acc, measurement) => {
       const value = stat[measurement]
@@ -351,7 +347,6 @@ class FromDate {
   }
 }
 
-
 class SearchParamsStorage {
   constructor() {
     this._prevData = null
@@ -360,7 +355,7 @@ class SearchParamsStorage {
   _parseSearchParamsToJSON() {
     const searchParams = new URLSearchParams(window.location.search)
     const data = {}
-    for (let [key, value] of searchParams) {
+    for (const [key, value] of searchParams) {
       if (value) {
         data[key] = value
       }
@@ -409,14 +404,10 @@ const load = () => {
 
 load()
 
-
-
-
 const fromDate = new FromDate({
   from: $fromDate.value,
   to: $toDate.value,
 })
-
 
 const canPlay = () => ($fromDate.value && !$toDate.value) || (!$fromDate.value && $toDate.value)
 
@@ -427,7 +418,6 @@ const step = () => {
 }
 
 const start = () => window.requestAnimationFrame(step)
-
 
 const update = () => {
   fromDate.update({
@@ -459,19 +449,15 @@ $form.addEventListener('change', () => {
   save()
 })
 
-
-
-// bootstrap-datetimepicker
-
+// Start bootstrap-datetimepicker
 let $activeInput = $fromDate
 
 const INPUT_ACTIVE_CLASS_NAME = 'active'
-const removeActiveClassName = (element) => element.classList.remove(INPUT_ACTIVE_CLASS_NAME)
-const addActiveClassName = (element) => element.classList.add(INPUT_ACTIVE_CLASS_NAME)
-
+const removeActiveClassName = element => element.classList.remove(INPUT_ACTIVE_CLASS_NAME)
+const addActiveClassName = element => element.classList.add(INPUT_ACTIVE_CLASS_NAME)
 
 // Update datetimepicker value by focusing inputs
-$form.querySelectorAll('input').forEach((element) => {
+$form.querySelectorAll('input').forEach(element => {
   element.addEventListener('focus', ({target}) => {
     $activeInput = target
     target.closest('.js-form__inputs').querySelectorAll(`.${INPUT_ACTIVE_CLASS_NAME}`).forEach(removeActiveClassName)
@@ -480,7 +466,7 @@ $form.querySelectorAll('input').forEach((element) => {
   })
 })
 
-const updateDateFromDatetimepicker = (date) => {
+const updateDateFromDatetimepicker = date => {
   if ($activeInput) {
     fillInput(date, $activeInput)
     triggerFormChange()
@@ -489,10 +475,9 @@ const updateDateFromDatetimepicker = (date) => {
 
 const updateDatetimepickerFromDateInput = () => {
   if ($activeInput.value) {
-    $('#datetimepicker').data("DateTimePicker").date($activeInput.value)
+    $('#datetimepicker').data('DateTimePicker').date($activeInput.value)
   }
 }
-
 
 // Initialize datetimepicker
 $('#datetimepicker')
