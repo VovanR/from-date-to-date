@@ -44,8 +44,26 @@ const MEASUREMENTS = [
 ]
 
 
+/**
+ * Pluralize word
+ *
+ * @param {string} word
+ * @param {number} count
+ * @returns {string}
+ */
 const pluralize = (word, count) => count > 1 ? `${word}s` : word
 
+
+/**
+ * Create HTMLElement
+ *
+ * @param {string} [type='div']
+ * @param {string} [className]
+ * @param {string} [text]
+ * @param {string} [html]
+ * @param {array} [children]
+ * @returns {HTMLElement}
+ */
 const createElement = ({
   type = 'div',
   className,
@@ -346,6 +364,7 @@ update()
 
 const triggerFormChange = () => $form.dispatchEvent(new Event('change'))
 
+// "Now" button
 document.getElementById('from-now-button').addEventListener('click', () => {
   $fromDate.value = moment().format(INPUT_DATETIME_LOCAL_FORMAT)
   triggerFormChange()
@@ -365,6 +384,8 @@ const INPUT_ACTIVE_CLASS_NAME = 'active'
 const removeActiveClassName = (element) => element.classList.remove(INPUT_ACTIVE_CLASS_NAME)
 const addActiveClassName = (element) => element.classList.add(INPUT_ACTIVE_CLASS_NAME)
 
+
+// Update datetimepicker value by focusing inputs
 $form.querySelectorAll('input').forEach((element) => {
   element.addEventListener('focus', ({target}) => {
     $activeInput = target
@@ -387,6 +408,8 @@ const updateDatetimepickerFromDateInput = () => {
   }
 }
 
+
+// Initialize datetimepicker
 $('#datetimepicker')
   .datetimepicker({
     inline: true,
