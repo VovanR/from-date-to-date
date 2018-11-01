@@ -334,22 +334,15 @@ const fromDate = new FromDate({
 })
 
 
-// let canPlay = false
+const canPlay = () => ($fromDate.value && !$toDate.value) || (!$fromDate.value && $toDate.value)
 
-const canPlay = () => {
-  return ($fromDate.value && !$toDate.value) || (!$fromDate.value && $toDate.value)
-}
-
-// setInterval(update)
-
-function step() {
+const step = () => {
   if (canPlay()) {
     update()
   }
-  // start();
 }
+
 const start = () => window.requestAnimationFrame(step)
-// const stop = () => canPlay = false
 
 
 const update = () => {
