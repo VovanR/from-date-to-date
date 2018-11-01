@@ -44,8 +44,26 @@ const MEASUREMENTS = [
 ]
 
 
+/**
+ * Pluralize word
+ *
+ * @param {string} word
+ * @param {number} count
+ * @returns {string}
+ */
 const pluralize = (word, count) => count > 1 ? `${word}s` : word
 
+
+/**
+ * Create HTMLElement
+ *
+ * @param {string} [type='div']
+ * @param {string} [className]
+ * @param {string} [text]
+ * @param {string} [html]
+ * @param {array} [children]
+ * @returns {HTMLElement}
+ */
 const createElement = ({
   type = 'div',
   className,
@@ -68,6 +86,30 @@ const createElement = ({
   }
 
   return element
+}
+
+
+/**
+ * Set datetime input value
+ *
+ * @param {string|moment} date
+ * @param {HTMLInputElement} inputElement
+ */
+function fillInput(date, inputElement) {
+  let value = ''
+
+  let momentDate
+  if (typeof date === 'string') {
+    momentDate = moment(date)
+  } else if (date instanceof moment) {
+    momentDate = date
+  }
+
+  if (momentDate && momentDate.isValid()) {
+    value = momentDate.format(INPUT_DATETIME_LOCAL_FORMAT)
+  }
+
+  inputElement.value = value
 }
 
 
@@ -310,28 +352,81 @@ class FromDate {
 }
 
 
+class SearchParamsStorage {
+  constructor() {
+    this._prevData = null
+  }
+
+  _parseSearchParamsToJSON() {
+    const searchParams = new URLSearchParams(window.location.search)
+    const data = {}
+    for (let [key, value] of searchParams) {
+      if (value) {
+        data[key] = value
+      }
+    }
+    return data
+  }
+
+  load() {
+    return this._parseSearchParamsToJSON()
+  }
+
+  _isChanged(data) {
+    return JSON.stringify(data) !== JSON.stringify(this._prevData)
+  }
+
+  save(data) {
+    if (!this._isChanged(data)) {
+      return
+    }
+
+    const newData = {}
+    const newSearchParams = new URLSearchParams()
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) {
+        newData[key] = value
+        newSearchParams.set(key, value)
+      }
+    })
+
+    this._prevData = newData
+
+    const url = window.location.pathname + '?' + newSearchParams.toString()
+    window.history.pushState(null, null, url)
+  }
+}
+
+const searchParamsStorage = new SearchParamsStorage()
+
+const load = () => {
+  const {from, to} = searchParamsStorage.load()
+
+  fillInput(from, $fromDate)
+  fillInput(to, $toDate)
+}
+
+load()
+
+
+
+
 const fromDate = new FromDate({
   from: $fromDate.value,
   to: $toDate.value,
 })
 
 
-// let canPlay = false
+const canPlay = () => ($fromDate.value && !$toDate.value) || (!$fromDate.value && $toDate.value)
 
-const canPlay = () => {
-  return ($fromDate.value && !$toDate.value) || (!$fromDate.value && $toDate.value)
-}
-
-// setInterval(update)
-
-function step() {
+const step = () => {
   if (canPlay()) {
     update()
   }
-  // start();
 }
+
 const start = () => window.requestAnimationFrame(step)
-// const stop = () => canPlay = false
 
 
 const update = () => {
@@ -342,17 +437,26 @@ const update = () => {
   start()
 }
 
-update()
+const save = () => {
+  searchParamsStorage.save({
+    from: $fromDate.value,
+    to: $toDate.value,
+  })
+}
+
+start()
 
 const triggerFormChange = () => $form.dispatchEvent(new Event('change'))
 
+// "Now" button
 document.getElementById('from-now-button').addEventListener('click', () => {
-  $fromDate.value = moment().format(INPUT_DATETIME_LOCAL_FORMAT)
+  fillInput(moment(), $fromDate)
   triggerFormChange()
 })
 
 $form.addEventListener('change', () => {
   update()
+  save()
 })
 
 
@@ -365,6 +469,8 @@ const INPUT_ACTIVE_CLASS_NAME = 'active'
 const removeActiveClassName = (element) => element.classList.remove(INPUT_ACTIVE_CLASS_NAME)
 const addActiveClassName = (element) => element.classList.add(INPUT_ACTIVE_CLASS_NAME)
 
+
+// Update datetimepicker value by focusing inputs
 $form.querySelectorAll('input').forEach((element) => {
   element.addEventListener('focus', ({target}) => {
     $activeInput = target
@@ -376,7 +482,7 @@ $form.querySelectorAll('input').forEach((element) => {
 
 const updateDateFromDatetimepicker = (date) => {
   if ($activeInput) {
-    $activeInput.value = date.format(INPUT_DATETIME_LOCAL_FORMAT)
+    fillInput(date, $activeInput)
     triggerFormChange()
   }
 }
@@ -387,6 +493,8 @@ const updateDatetimepickerFromDateInput = () => {
   }
 }
 
+
+// Initialize datetimepicker
 $('#datetimepicker')
   .datetimepicker({
     inline: true,
