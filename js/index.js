@@ -89,6 +89,30 @@ const createElement = ({
 }
 
 
+/**
+ * Set datetime input value
+ *
+ * @param {string|moment} date
+ * @param {HTMLInputElement} inputElement
+ */
+function fillInput(date, inputElement) {
+  let value = ''
+
+  let momentDate
+  if (typeof date === 'string') {
+    momentDate = moment(date)
+  } else if (date instanceof moment) {
+    momentDate = date
+  }
+
+  if (momentDate && momentDate.isValid()) {
+    value = momentDate.format(INPUT_DATETIME_LOCAL_FORMAT)
+  }
+
+  inputElement.value = value
+}
+
+
 class ResultStatListItem {
   constructor({label, value}) {
     this.label = label
@@ -359,7 +383,7 @@ const triggerFormChange = () => $form.dispatchEvent(new Event('change'))
 
 // "Now" button
 document.getElementById('from-now-button').addEventListener('click', () => {
-  $fromDate.value = moment().format(INPUT_DATETIME_LOCAL_FORMAT)
+  fillInput(moment(), $fromDate)
   triggerFormChange()
 })
 
@@ -390,7 +414,7 @@ $form.querySelectorAll('input').forEach((element) => {
 
 const updateDateFromDatetimepicker = (date) => {
   if ($activeInput) {
-    $activeInput.value = date.format(INPUT_DATETIME_LOCAL_FORMAT)
+    fillInput(date, $activeInput)
     triggerFormChange()
   }
 }
