@@ -1,5 +1,8 @@
 # from-date-to-date
 
+<img align="right" width="120" height="120"
+     src="./logo.svg" alt="From Date to Date logo">
+
 [![XO code style][codestyle-image]][codestyle-url]
 
 [![Build Status][travis-image]][travis-url]
