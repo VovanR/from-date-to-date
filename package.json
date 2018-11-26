@@ -12,6 +12,7 @@
     "prepush": "npm test",
     "precommit": "npm test"
   },
+  "browser": "./js/index.js",
   "keywords": [],
   "dependencies": {},
   "devDependencies": {
@@ -29,11 +30,12 @@
       "browser"
     ],
     "rules": {
-      "comma-dangle": "off"
+      "comma-dangle": "off",
+      "import/extensions": 0
     },
     "globals": [
       "moment",
-      "$"
+      "jQuery"
     ]
   }
 }
