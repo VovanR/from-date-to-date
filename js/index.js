@@ -127,7 +127,11 @@ function fillInput(date, inputElement) {
 
   let momentDate
   if (typeof date === 'string') {
-    momentDate = moment(date)
+    if (date === 'now') {
+      momentDate = moment()
+    } else {
+      momentDate = moment(date)
+    }
   } else if (date instanceof moment) {
     momentDate = date
   }
