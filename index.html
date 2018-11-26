@@ -20,7 +20,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
-  <link href="styles/index.css?v5" rel="stylesheet">
+  <link href="styles/index.css?v6" rel="stylesheet">
 </head>
 <body>
   <main id="app" class="app">
@@ -64,7 +64,11 @@
     <div class="app__output-container">
       <div class="result-container">
         <div id="result">
-          <h2>Relative</h2>
+          <h2>
+            <label for="result-text">
+              Relative
+            </label>
+          </h2>
 
           <p>
             <textarea id="result-text" class="form-control" readonly></textarea>
@@ -75,7 +79,11 @@
         </div>
 
         <div id="result-foo">
-          <h2>Absolute</h2>
+          <h2>
+            <label for="result-foo-text">
+              Absolute
+            </label>
+          </h2>
 
           <p>
             <textarea id="result-foo-text" class="form-control" readonly></textarea>
