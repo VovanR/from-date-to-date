@@ -1,5 +1,18 @@
 :root {
-  --primary-color: #333;
-  --primary-hover-color: #673ab7;
-  --arrow-color: #ccc;
+  /* Font stack from Bootstrap 4 */
+  --app-font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --control-label-font-size: 0.75rem;
+  --color1: #2a3941;
+  --color2: #3f5765;
+  --color3: #bdd4de;
+  --color4: #efefef;
+  --color5: #ff530d;
+  --control-input-color: var(--color1);
+  --control-input-placeholder-color: var(--color3);
+  --control-input-border-width: 1px;
+  --control-input-border-color: var(--color3);
+  --control-input-focus-border-color: var(--color5);
+  --control-input-background-color: #fff;
+  --control-input-readonly-background-color: #fff;
 }

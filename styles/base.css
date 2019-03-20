@@ -11,13 +11,25 @@ body {
 
 body {
   margin: 0;
-  padding: 2em;
-  font-family: monospace;
+  padding: 0;
+  font-family: var(--app-font-family);
   max-width: 1024px;
+}
+
+/* Remove Firefox (Android) border radius on buttons */
+button {
+  border-radius: 0;
+}
+
+/* Remove Firefox (Android) dotted border on focus */
+button::-moz-focus-inner {
+  border: 0;
 }
 
 
 .app {
+  padding: 2em;
+  color: var(--color1);
 }
 
 .app__title {
@@ -35,6 +47,7 @@ body {
 
 label {
   font-weight: 500;
+  color: inherit;
 }
 
 
@@ -50,24 +63,24 @@ label {
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
+@media (max-width: 700px) {
+  .form__container {
+    grid-template-columns: 1fr;
+  }
+}
 .form__inputs {
   display: grid;
   grid-template-rows: auto auto auto 1fr;
+  gap: 15px;
+}
+.form__input {
+  display: grid;
   gap: 15px;
 }
 .form__datetimepicker {
 }
 
 
-.form p {
-  display: flex;
-  align-items: center;
-  /*   grid-template-columns: 35px 1fr; */
-  /*   gap: 5px; */
-  margin: 0;
-  /* For bootstrap-datetimepicker */
-  position: relative;
-}
 .form label {
   display: inline-block;
   width: 35px;
@@ -77,8 +90,6 @@ label {
   display: inline-block;
 }
 .form button {
-  display: inline-block;
-  margin-left: 5px;
 }
 
 
@@ -114,6 +125,7 @@ button,
 input,
 textarea {
   font-family: inherit;
+  font-size: inherit;
 }
 
 textarea {
@@ -121,9 +133,47 @@ textarea {
   resize: vertical;
 }
 
+.form-control {
+  color: var(--control-input-color);
+  font-size: inherit;
+  border-width: var(--control-input-border-width);
+  border-style: solid;
+  border-color: var(--control-input-border-color);
+  border-radius: 0;
+  background-color: var(--control-input-background-color);
+}
+.form-control:focus {
+  border-color: var(--control-input-focus-border-color);
+  outline: none;
+}
+.form-control:read-only {
+  background-color: var(--control-input-readonly-background-color);
+}
+
+
+button {
+  color: var(--control-input-color);
+  border-width: var(--control-input-border-width);
+  border-style: solid;
+  border-color: var(--control-input-border-color);
+  border-radius: 0;
+  background-color: var(--control-input-background-color);
+  padding: 0.1em 0.5em;
+}
+button:focus {
+  border-color: var(--control-input-focus-border-color);
+  outline: none;
+}
+
+
 .result-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
   width: 100%;
+}
+@media (max-width: 700px) {
+  .result-container {
+    grid-template-columns: 1fr;
+  }
 }

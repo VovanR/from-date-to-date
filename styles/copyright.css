@@ -14,7 +14,7 @@
 }
 
 .copyright:hover {
-    opacity: 1;
+    opacity: 1 !important;
     text-decoration: none;
 }
 
@@ -22,7 +22,12 @@
 }
 
 .copyright__author {
+    display: none;
     text-decoration: underline;
+}
+
+.copyright:hover .copyright__author {
+    display: inline-block;
 }
 
 .copyright {

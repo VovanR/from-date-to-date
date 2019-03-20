@@ -1,7 +1,7 @@
-@import "variables.css?v3";
-@import "twitter-bootstrap-theme.css";
-@import "bootstrap-datetimepicker-theme.css";
-@import "base.css?v5";
-@import "copyright.css?v3";
+@import "../vendor/picker.min.css";
+
+@import "variables.css";
+@import "base.css";
+@import "copyright.css";
 @import "result-stat-list.css";
 @import "noscript.css";

@@ -3,13 +3,14 @@
 import {FromDate} from './from-date.js'
 import {SearchParamsStorage} from './search-params-storage.js'
 import {Form} from './form.js'
-import {ActiveInput} from './active-onput.js'
 import {DateTimePicker} from './date-time-picker.js'
 import {Play} from './play.js'
-import {fillInput} from './utils.js'
 
-const $fromDate = document.getElementById('from-date')
-const $toDate = document.getElementById('to-date')
+const $fromDate = document.querySelector('#from-date')
+const $fromDateDateTimePicker = document.querySelector('#from-date-datetimepicker')
+
+const $toDate = document.querySelector('#to-date')
+const $toDateDateTimePicker = document.querySelector('#to-date-datetimepicker')
 
 const getValues = () => ({
   from: $fromDate.value,
@@ -17,15 +18,6 @@ const getValues = () => ({
 })
 
 const searchParamsStorage = new SearchParamsStorage()
-
-const load = () => {
-  const {from, to} = searchParamsStorage.load()
-
-  fillInput(from, $fromDate)
-  fillInput(to, $toDate)
-}
-
-load()
 
 const fromDate = new FromDate(getValues())
 
@@ -47,41 +39,42 @@ const form = new Form({
 
 const triggerFormChange = () => form.triggerChange()
 
+const updateDateFromDatetimepicker = () => {
+  triggerFormChange()
+}
+
+const dateTimePickerFrom = new DateTimePicker({
+  element: $fromDate,
+  container: $fromDateDateTimePicker,
+  onChange() {
+    updateDateFromDatetimepicker()
+  }
+})
+
+const dateTimePickerTo = new DateTimePicker({
+  element: $toDate,
+  container: $toDateDateTimePicker,
+  onChange() {
+    updateDateFromDatetimepicker()
+  }
+})
+
+const {from, to} = searchParamsStorage.load()
+dateTimePickerFrom.setDate(from)
+dateTimePickerTo.setDate(to)
+
 // "Now" button
-document.getElementById('from-now-button').addEventListener('click', () => {
-  fillInput(moment(), $fromDate)
+document.querySelector('#from-now-button').addEventListener('click', () => {
+  dateTimePickerFrom.setDate(moment())
   triggerFormChange()
 })
 
-// Start bootstrap-datetimepicker
-const activeInput = new ActiveInput({
-  initialActive: $fromDate,
-  inputElements: [
-    $fromDate,
-    $toDate,
-  ],
-  onChange: activeInputElement => {
-    // Update datetimepicker value by focusing inputs
-    updateDatetimepickerFromDateInput(activeInputElement)
-  },
-})
-
-const updateDateFromDatetimepicker = date => {
-  fillInput(date, activeInput.getActiveElement())
+// "Reset" buttons
+document.querySelector('#form-from-reset-button').addEventListener('click', () => {
+  dateTimePickerFrom.reset()
   triggerFormChange()
-}
-
-// Initialize datetimepicker
-const dateTimePicker = new DateTimePicker({
-  onChange(date) {
-    updateDateFromDatetimepicker(date)
-  }
 })
-
-const updateDatetimepickerFromDateInput = activeInputElement => {
-  const {value} = activeInputElement
-
-  if (value) {
-    dateTimePicker.setDate(value)
-  }
-}
+document.querySelector('#form-to-reset-button').addEventListener('click', () => {
+  dateTimePickerTo.reset()
+  triggerFormChange()
+})

@@ -79,7 +79,7 @@ const createElement = ({
  * Set datetime input value
  *
  * @param {string|moment} date
- * @param {HTMLInputElement} inputElement
+ * @param {Element} inputElement
  */
 function fillInput(date, inputElement) {
   let value = ''
@@ -103,8 +103,12 @@ function fillInput(date, inputElement) {
   inputElement.value = value
 }
 
+// `\u00A0` - Non-breaking space
+const nbsp = () => '\u00A0'
+
 export {
   pluralize,
   createElement,
   fillInput,
+  nbsp,
 }

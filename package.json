@@ -2,19 +2,19 @@
   "name": "from-date-to-date",
   "version": "0.0.1",
   "description": "Calculate time from date to date",
-  "private": true,
   "license": "MIT",
+  "private": true,
   "repository": "VovanR/from-date-to-date",
   "author": "Vladimir Rodkin <mail@vovanr.com> (https://github.com/VovanR)",
   "scripts": {
     "start": "http-server .",
-    "test": "xo",
-    "prepush": "npm test",
-    "precommit": "npm test"
+    "test": "xo"
   },
   "browser": "./js/index.js",
   "keywords": [],
-  "dependencies": {},
+  "dependencies": {
+    "pickerjs": "^1.2.1"
+  },
   "devDependencies": {
     "http-server": "^0.11.1",
     "xo": "^0.23.0"
@@ -34,8 +34,7 @@
       "import/extensions": 0
     },
     "globals": [
-      "moment",
-      "jQuery"
+      "moment"
     ]
   }
 }

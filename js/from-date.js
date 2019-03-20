@@ -7,7 +7,10 @@ import {
   MEASUREMENT_NAME,
   MEASUREMENTS,
 } from './constants.js'
-import {pluralize} from './utils.js'
+import {
+  pluralize,
+  nbsp,
+} from './utils.js'
 
 const $result = document.getElementById('result-text')
 const $resultStat = document.getElementById('result-list')
@@ -95,7 +98,7 @@ class FromDate {
     const result = MEASUREMENTS.reduce((acc, measurement) => {
       const value = stat[measurement]
       if (value) {
-        acc.push(`${value.toLocaleString()} ${pluralize(MEASUREMENT_NAME[measurement], value)}`)
+        acc.push(`${value.toLocaleString()}${nbsp()}${pluralize(MEASUREMENT_NAME[measurement], value)}`)
       }
       return acc
     }, [])
@@ -110,7 +113,7 @@ class FromDate {
 
     const lastItem = result.pop()
 
-    return `${result.join(', ')} ${lastDivider} ${lastItem}`
+    return `${result.join(', ')} ${lastDivider}${nbsp()}${lastItem}`
   }
 
   update({from, to}) {
