@@ -1,3 +1,17 @@
+/**
+ * Get/Set URL search params
+ * {@link http://jsfiddle.net/VovanR/61a35x9e/}
+ * @version 0.1.0
+ *
+ * @example
+ * // Open URL https://localhost/?foo=1
+ * const searchParams = new SearchParamsStorage();
+ * searchParams.load();
+ * //=> {foo: 1}
+ * searchParams.save({bar: 55});
+ * searchParams.load();
+ * //=> {bar: 55}
+ */
 class SearchParamsStorage {
   constructor() {
     this._prevData = null
